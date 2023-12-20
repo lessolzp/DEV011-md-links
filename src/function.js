@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const fsPromises = require('fs').promises;
 const markdownIt = require('markdown-it');
+const axios = require('axios');
 
 // function to valid if the path is absolute
 const isAbsolutePath = (route) => path.isAbsolute(route)
@@ -42,7 +43,8 @@ const findLinks = (route) => {
     const md = new markdownIt();
     const objects = md.parse(pathContent, {});
     const links = [];
-    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/; 
+    //const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/; 
+    const linkRegex = /\[([^\]]+)\]\((https:\/\/[^)]+)\)/g;
     objects.forEach(object => {
       if (object.type === 'inline' && object.children) {
         //console.log(object)
@@ -53,7 +55,8 @@ const findLinks = (route) => {
             if (match) {
               const href = match[2]
               const text = match[1]
-              const file = route
+              const file = path.relative(process.cwd(), route)
+              //const formattedLink = `${file} ${href} ${text}`;
               links.push({href, text, file})
             }
           }
@@ -67,7 +70,58 @@ const findLinks = (route) => {
   })
 }
 
+//function to validate paths
+const validateLinks = (link) => {
+  return axios.get(link.href)
+  .then((response) => {
+    return { ...link, status: response.status, message: response.statusText }
+  })
+  .catch((error) => {
+    return { ...link, status: error.response ? error.response.status : undefined, message: 'FAIL' }
+  })
+}
+
+
+//function to compute statistics about the links
+const linkStats = (links) => {
+  const totalLinks = links.length;
+  const uniqueLinks = [...new Set(links.map(link => link.href))];
+  const totalUniqueLinks = uniqueLinks.length;
+  /*let stats = [
+    `Total: ${totalLinks}`,
+    `Unique: ${totalUniqueLinks}`,
+  ];*/
+  let stats = [totalLinks, totalUniqueLinks]
+  return stats
+}
+const validatedLinkStats = (links) => {
+  const totalLinks = links.length;
+  const uniqueLinks = [...new Set(links.map(link => link.href))]; 
+  const totalUniqueLinks = uniqueLinks.length;
+  const totalOk = links.filter(link => link.message === 'OK').length; 
+  const totalFail = totalLinks - totalOk;
+  /*let stats = [
+    `Total: ${totalLinks}`,
+    `Unique: ${totalUniqueLinks}`,
+    `Ok: ${totalOk}`,
+    `Fail: ${totalFail}`,
+  ]*/
+  let stats = [totalLinks, totalUniqueLinks, totalOk, totalFail]
+return stats
+}
+/*link = {
+    href: 'https://carlosazaustre.es/manejando-la-asincronia-en-javascript',
+    text: 'Asíncronía en js',
+    file: 'README.md',
+  }
+validateLinks(link)
+  .then((result) => {
+    console.log(result);
+  })
+  .catch(error => {
+    console.error(error);
+  })*/
 
 module.exports = {
-    isAbsolutePath, absPathExists, validateExtension, validatePath, findLinks
+    isAbsolutePath, absPathExists, validateExtension, validatePath, findLinks, validateLinks, linkStats, validatedLinkStats
   };
