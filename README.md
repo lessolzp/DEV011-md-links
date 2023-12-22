@@ -1,9 +1,8 @@
-# Markdown Links
-# Resumen del Proyecto: Analizador de Enlaces en Archivos Markdown
+# Resumen del Proyecto: mdLinks Analizador de Enlaces en Archivos Markdown
 
 ## Descripción del Proyecto
 
-El *Analizador de Enlaces en Archivos Markdown* es una herramienta desarrollada en Node.js que aborda la problemática común de enlaces rotos o no válidos en archivos Markdown, utilizados ampliamente en plataformas como GitHub, foros y blogs. Esta herramienta, ahora lista y funcional, permite a las desarrolladoras mejorar la calidad de la información compartida en sus repositorios y documentos.
+El *mdLinks* como lo dice el título, es un analizador de enlances en archivos Markdown. Es una herramienta desarrollada en Node.js que aborda la problemática común de enlaces rotos o no válidos en archivos Markdown, utilizados ampliamente en plataformas como GitHub, foros y blogs. Esta herramienta, ahora lista y funcional, permite a las desarrolladoras mejorar la calidad de la información compartida en sus repositorios y documentos.
 
 ## Funcionalidades Principales
 
@@ -26,3 +25,13 @@ La librería se publica como un módulo de Node.js en GitHub, lo que facilita su
 ### Interfaz de Línea de Comandos (CLI)
 
 La librería también cuenta con una interfaz de línea de comandos que permite ejecutar el análisis directamente desde el terminal. Esto brinda una solución rápida y eficiente para verificar enlaces en archivos Markdown sin necesidad de integración en un proyecto específico.
+
+
+## Resultados y Distribución
+
+Con el proyecto finalizado y funcional, las desarrolladoras tienen a su disposición una herramienta valiosa para mejorar la calidad de la información en sus proyectos. La librería se distribuye a través de npm y está disponible en un repositorio público en GitHub https://github.com/lessolzp/DEV011-md-links, fomentando la colaboración y el acceso abierto.
+
+Este proyecto no solo proporciona una solución práctica para la problemática de los enlaces en archivos Markdown, sino que también enriquece las habilidades de las desarrolladoras al diseñar y compartir librerías eficientes en el ecosistema de Node.js.
+
+
+Para información adicional sobre el desarrollo del proyecto visitar la sección de [ABOUT](./ABOUT.md) del mismo repositorio.

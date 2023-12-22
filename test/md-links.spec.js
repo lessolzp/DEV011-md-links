@@ -6,6 +6,7 @@ jest.mock('/Users/leslie/Laboratoria/DEV011-md-links/src/function.js', () => ({
   validatePath: jest.fn(),
   findLinks: jest.fn(),
   validateLinks: jest.fn(),
+  linkStats: jest.fn(),
   validatedLinkStats: jest.fn(),
 }));
 
